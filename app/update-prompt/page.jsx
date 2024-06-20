@@ -2,10 +2,31 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import Image from "next/image";
+
 
 import Form from "@components/Form";
-
 const EditPrompt = () => {
+  <Suspense
+    fallback={
+      <div className="w-full flex-center">
+        <Image
+          src="assets/icons/loader.svg"
+          width={50}
+          height={50}
+          alt="loader"
+          className="object-contain"
+        />
+      </div>
+    }
+  >
+    <Edit />
+  </Suspense>;
+
+}
+  
+const Edit = () => {
   const router = useRouter();
     const searchParams = useSearchParams();
     const promptId = searchParams.get("id");
