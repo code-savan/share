@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
 
 import PromptCard from "./PromptCard";
 
@@ -21,7 +20,6 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
-    const { data: session } = useSession();
 
 
 
@@ -60,20 +58,24 @@ const Feed = () => {
      setSearchedResults(searchResult);
    };
 
-   useEffect(() => {
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch("/api/prompt")
-      const data = await response.json()
-      // console.log("Fetched data:", data)
-      setPosts(data);
-    } catch (error) {
-      console.error("Fetch error:", error)
-    }
+   const fetchPosts = async () => {
+     try {
+       const response = await fetch("/api/prompt")
+       const data = await response.json()
+       // console.log("Fetched data:", data)
+       setPosts(data);
+     } catch (error) {
+       console.error("Fetch error:", error)
+     }
   };
+  
+   useEffect(() => {
+     fetchPosts();
+   }, []);
 
-   if (!session) fetchPosts()
-  }, []);
+   useEffect(() => {
+     console.log("Posts updated:", posts); // Debugging log ooo, God abeg😫
+   }, [posts]);
 
   return (
     <section className="feed">
