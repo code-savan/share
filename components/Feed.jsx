@@ -16,7 +16,7 @@ const PromptCardList = ({ data, handleTagClick }) => {
     ))}
     </div>
   )
-};
+}
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -56,24 +56,20 @@ const Feed = () => {
      setSearchedResults(searchResult);
    };
 
+   useEffect(() => {
   const fetchPosts = async () => {
     try {
-      const response = await fetch("/api/prompt");
-      const data = await response.json();
-      console.log("Fetched data:", data);
+      const response = await fetch("/api/prompt")
+      const data = await response.json()
+      // console.log("Fetched data:", data)
       setPosts(data);
     } catch (error) {
-      console.error("Fetch error:", error);
+      console.error("Fetch error:", error)
     }
   };
 
-  useEffect(() => {
     fetchPosts();
   }, []);
-
-  useEffect(() => {
-    console.log("Posts state changed:", posts);
-  }, [posts]);
 
   return (
     <section className="feed">
